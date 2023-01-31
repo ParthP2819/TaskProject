@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Category>
+
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h3 class="text-primary">Category List</h3>
+        </div>
+        <div class="col-6 text-end">
+
+            <a onclick="showInPopup('@Url.Action("getdata","Category",null,Context.Request.Scheme)','Create New Parent')" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Add parent
+            </a>
+
+
+        </div>
+    </div>
+</div>
+<br />
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+
+
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>CreatedOn</th>
+            <th>ModifiedOn</th>
+            <th>ParentCategoryId</th>
+            <th>Opration</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model)
+        {
+            <tr>
+
+                <td width="30">
+                    @obj.Name
+                </td>
+                <td width="30">
+                    @obj.Description
+                </td>
+                <td width="30">
+                    @if (@obj.IsActive == true)
+                    {
+                        <label>Active</label>
+                    }
+                    else
+                    {
+                        <label>InActive</label>
+                    }
+
+                </td>
+
+                <td width="30">
+                    @obj.CreatedOn
+                </td>
+                <td width="30">
+                    @obj.ModifiedOn
+                </td>
+                <td width="30">
+                    @obj.ParentCategoryId
+                </td>
+                <td width="20" style="text-align:center">
+                    <div class="w-75 btn-group " role="group">
+
+                        <a class="btn btn-primary mx-2" onclick="showInPopup('@Url.Action("getdata","Category",new {id = obj.CategoryId,pid=obj.ParentCategoryId},Context.Request.Scheme)','Edit child')">
+                            <i class="bi bi-pencil-square"></i>Edit
+                        </a>
+                        <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.CategoryId" class="btn btn-danger mx-2">
+                            <i class="bi bi-trash-fill"></i>Delete
+                        </a>
+
+                        <a onclick="showInPopup('@Url.Action("getdata","Category",new {id = obj.CategoryId},Context.Request.Scheme)','Create New child')" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i>&nbsp;&nbsp;Add Child
+                        </a>
+
+
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

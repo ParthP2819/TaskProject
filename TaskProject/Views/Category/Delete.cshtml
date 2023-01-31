@@ -1,0 +1,31 @@
+﻿@model Category
+
+
+<form method="post">
+    <input asp-for="CategoryId" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete Category</h2>
+            <hr />
+        </div>
+
+
+        @if (Model.ParentCategoryId == 0)
+        {
+            <div class="mb-3">
+                <label> Delete Parent As well As Delete All Child </label>
+
+            </div>
+        }
+
+        <button type="submit" asp-action="Deletepost" class="btn btn-primary" style="width:150px"> Delete</button>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
+
+    </div>
+
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptspartial"></partial>
+    }
+}

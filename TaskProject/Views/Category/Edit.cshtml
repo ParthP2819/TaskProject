@@ -1,0 +1,66 @@
+﻿@model Category
+
+
+<form method="post">
+    <input asp-for="CategoryId" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Category</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-bg-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+
+
+        </div>
+
+
+        @*<div class="mb-3">
+        <label asp-for="ModifiedOn"></label>
+        <input asp-for="ModifiedOn" class="form-control" />
+        </div>*@
+        <div class="mb-3">
+            @if (Model.ParentCategoryId != 0)
+            {
+                <label asp-for="ParentCategoryId"></label>
+                <select asp-for="ParentCategoryId">
+
+                    @foreach (var obj in ViewBag.message)
+                    {
+                        string values = obj.Value;
+                        string[] afterspilit = values.Split("$");
+
+                        if (afterspilit[0] == "0" || Model.ParentCategoryId.ToString() == afterspilit[1])
+                        {
+
+                            <option value="@afterspilit[1]">@obj.Text</option>
+                        }
+
+
+                    }
+                </select>
+            }
+
+
+        </div>
+        @*<button type="submit" class="btn btn-primary" style="width:150px"> Edit</button>*@
+        <a asp-controller="Category" asp-action="Edit" class="btn btn-primary">Edit</a>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
+
+    </div>
+
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptspartial"></partial>
+    }
+}
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
